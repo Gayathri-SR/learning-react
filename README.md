@@ -55,3 +55,29 @@ Creating this repo to learn react the right way
 -> Elements are immutable
 -> Updates are performed only when & where necessary
 -> Conditional remdering can be used inside JSX to choose which elements to render
+
+**Functional components**
+-> A plain JS function that returns a react element (JSX)
+-> They replaced older, more complex Class components
+**Syntax rules**
+-> Must capitalize name (UserProfile)
+-> Must return JSX
+**Working**
+1. Accepting Props:
+    -> They accept a single object argument containing data from a parent
+    -> JS destructuring can be used to pull values
+2. Managing state (Hooks):
+    -> Since they're just standard functions, they rely on special built-in React functions called 'Hooks' (like useState) to remember data between renders
+**Uses**
+-> Simpler code
+-> Easier to read and test
+-> Better performance
+
+**Props**
+-> Properties - a configuration mechanism used to pass data from a parent component to a child component
+**Core characteristics**
+-> Immutable by child components
+-> Data flow is unidirectional (top->down)
+**Special prop - children**
+-> Every component automatically receives a prop called 'children'
+-> It contains whatever content or nested components are placed between its opening and closing tags
