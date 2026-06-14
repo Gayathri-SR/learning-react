@@ -81,3 +81,63 @@ Creating this repo to learn react the right way
 **Special prop - children**
 -> Every component automatically receives a prop called 'children'
 -> It contains whatever content or nested components are placed between its opening and closing tags
+
+**State**
+-> A built-in object used to store data that is local and private to a component
+-> When State changes, react automatically re-runs the component function and updates the UI(re-rendering)
+**State rules**
+-> Never modify state directly, as React won't know that the data changes and the UI will stay broken
+-> State is asynchronous, hence can't read it immediately after being set
+-> Always create a new copy using spread operator(...) and treat them as immutable
+**useState**
+-> A React hook that allows you to add State(local memory) to a functional component
+
+**Event handling**
+-> Capturing user interactions and executing JS code in response
+-> React uses camelCase naming convention ('onClick instead of 'onclick') and passes a function reference directly instead of a string template literal
+   (<button onClick={funcName}>BtnText</button>)
+**Rules of react events**
+-> Pass the function reference, don't call it
+-> Pass arguments to event handlers via arrow functions
+-> They have browser's native event in a cross-browser 'SyntheticEvent' wrapper (e)
+**Common React events**
+-> onClick, onChange, onSubmit
+
+**Re-rendering**
+-> The process where React calls a component a 2nd(or 3rd or 4th) time to figure out the visual changes in the UI based on new data
+-> Flow : Data changes => Component re-runs => UI updates
+**What triggers a re-render?**
+-> State changes
+-> Prop changes
+-> Parent re-renders
+**Render cycle**
+**1. Render phase(Internal Math)**
+-> React executes the component function and generates the new JSX tree, and compares ot with the old one inside the 'Virtual DOM'. This comparision process is called 'Diffing'
+**2. Commit phase(DOM update)**
+-> React takes the differences found during diffing and surgically updates the real browser DOM
+-> Rule : If the render phase found no changes, this phase is skipped and the real DOM remains untouched
+**Performance pitfall - Infinite loops**
+-> An infinite render loop happens when State is updated directly inside the main body of a component
+-> Fix : Always isolate state updates inside 'Event handlers' (like onClick)/'useEffect' hook with a proper dependency array
+
+**Real DOM vs VDOM**
+-> The real DOM treats updates with a heavy hand - frequently destroying and rebuilding larger layout blocks than necessary
+-> The VDOM acts as a 'buffer layer', it batch-processes changes on a digital blueprint first, ensuring the real DOM is touched only where the data is changed
+
+**Reconciliation**
+-> The internal algorithm react uses to compare 2 VDOM trees (the old & the new one) to determine exactly which parts of the real DOM needs to be updated
+-> The goal : To make UI updates as fast as possible by finding the min. no. of changes to sync the screen with the data
+**Tree comparision and the diffing algorithm**
+**The problem** - Comparing 2 tree structures node-by-node is very slow, costing O(n^3)
+**The react solution** - A 'Heuristic diffing algorithm'  at O(n) by making 2 smart assumptions:
+    1. 2 elements of different types will produce different trees
+    2. Developers can provide a 'key' prop to hint which child elements are stable across renders
+-> If the root tag of a UI element changes, React tears down the entire old tree and builds a brand-new one
+-> If the HTML tags match but the attributes change, React keeps the DOM node and only updates the altered attributes
+**Why react uses keys**
+-> When rendering a list of synamic items, React needs a way to track which items were added, removed or rearranged.
+-> Key attribute= unique ID
+**Rules for keys**
+-> Must be unique among sibling elements
+-> Must be permanent and predictable
+-> Avoid using array indexes as keys if the list can be filtered, sorted or reordered
