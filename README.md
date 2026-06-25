@@ -141,3 +141,12 @@ Creating this repo to learn react the right way
 -> Must be unique among sibling elements
 -> Must be permanent and predictable
 -> Avoid using array indexes as keys if the list can be filtered, sorted or reordered
+
+**Hooks**
+-> Special built-in functions that let you "hook into" React state and lifecycle features from functional components
+-> Before hooks : Complex class components to manage state or lifecycle methods. Hooks made functional components fully capable
+**Core rules of hooks**
+-> React relies on the order in which Hooks are called. To prevent breaking this order, the following rules should be followed :
+    => Only call hooks at the top level - Never call them inside loops, conditional statements or nested functions
+    => Only call hooks from React functions - Call them only from React functional components or your own custom hooks. Do not call them from regular JS functions.
+**The big three hooks**
