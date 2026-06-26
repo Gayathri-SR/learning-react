@@ -150,3 +150,24 @@ Creating this repo to learn react the right way
     => Only call hooks at the top level - Never call them inside loops, conditional statements or nested functions
     => Only call hooks from React functions - Call them only from React functional components or your own custom hooks. Do not call them from regular JS functions.
 **The big three hooks**
+**1.useState (State management)**
+-> Allows a component to remember data between renders
+-> Calling 'setState' doesn't just change a variable; it explicitly flags the component as "dirty" inside React's engine, scheduling a re-render
+**2.useEffect (Side effects)**
+-> Lets you synchronize your component with external systems (API data fetching, subscriptions, manual DOM manipulation)
+**Dependency array**
+-> undefined (no array) : Runs on every single render
+-> [] (empty array) : Runs exactly once when the component mounts
+-> [prop,state] : Runs on mount, and then only if 'prop' or 'state' changes
+**3.useRef (Persistence without rendering)**
+-> Stores a mutable value that persists across renders, but does not trigger a re-render when it changes. Also used to reference real DOM nodes directly
+-> Used for storing timer IDs, keeping track of previous state, or focusing an input element manually
+**Advanced optimization hooks**
+-> When your application grows, React provides hooks to cache(memoize) computations so that re-renders are fast
+**1.useMemo**
+-> Caches the result of a costly calculation so it doesn't re-run on every render unless its inputs change
+**2.useCallback**
+-> Caches the function definition itself. Useful when passing functions as props to optimized child components to prevent unnecessary re-renders
+**Custom hooks**
+-> A JS function whose name starts with 'use' and can call other hooks
+-> To extract component logic into reusable, shareable functions
