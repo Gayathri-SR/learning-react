@@ -156,9 +156,15 @@ Creating this repo to learn react the right way
 **2.useEffect (Side effects)**
 -> Lets you synchronize your component with external systems (API data fetching, subscriptions, manual DOM manipulation)
 **Dependency array**
--> undefined (no array) : Runs on every single render
--> [] (empty array) : Runs exactly once when the component mounts
--> [prop,state] : Runs on mount, and then only if 'prop' or 'state' changes
+-> It tells React exactly when to execute or skip your side effect function
+-> React uses 'Object.is()' (Shallow comparision) to determine if a value in the DA has changed
+**DA values and uses**
+-> undefined (no array) : Runs on every single render - for general logging/data fetching
+-> [] (empty array) : Runs exactly once when the component mounts - For API data fetching, event listeners
+-> [prop,state] : Runs on mount, and then only if 'prop' or 'state' changes - for fetching new data when something changes
+**DA working**
+-> Primitives (Strings,Numbers,Booleans) : Checked by value
+-> Objects and Arrays : Checked by reference, not content
 **3.useRef (Persistence without rendering)**
 -> Stores a mutable value that persists across renders, but does not trigger a re-render when it changes. Also used to reference real DOM nodes directly
 -> Used for storing timer IDs, keeping track of previous state, or focusing an input element manually
