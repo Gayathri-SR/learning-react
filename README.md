@@ -177,3 +177,11 @@ Creating this repo to learn react the right way
 **Custom hooks**
 -> A JS function whose name starts with 'use' and can call other hooks
 -> To extract component logic into reusable, shareable functions
+**Pitfalls of caching hooks**
+**1. Overuse (Premature optimization)**
+-> Mistake : Wrapping absolutely every simple function/math equation in 'useCallback' or 'useMemo'
+-> Why it hurts : The hooks themselves have a performance overhead (React has to run DA comparisions on every render). For simple tasks, the overhead of the hook is more expensive than just recreating the function/variable
+-> Rule of thumb : Don't use them until you hit a noticeable performance lag or are passing props to a heavily optimized child tree
+**2. Stale closures**
+-> Mistake : Forgetting to include a variable inside the DA
+-> Why it hurts : The cached function/value will lock in the variable values from the 'very first render'. If those variables change later, the cached function will keep using the old, broken data.
