@@ -185,3 +185,26 @@ Creating this repo to learn react the right way
 **2. Stale closures**
 -> Mistake : Forgetting to include a variable inside the DA
 -> Why it hurts : The cached function/value will lock in the variable values from the 'very first render'. If those variables change later, the cached function will keep using the old, broken data.
+
+**Performance Optimization**
+**1. The core performance problem**
+-> By default, when a component's state changes, React re-renders the components and recursively re-renders all it's children, even if those children didn't receive any new data. In large apps, this causes massive amounts of wasted CPU work
+**2. Preventing unnecessary child re-renders**
+**React.memo (Component caching)**
+-> What it is : A higher-order component that wraps a functional component
+-> How it works : It forces the child component to check it's incoming props. If the props haven't changed since the last render, the child skips re-rendering entirely
+**The Synergy : React.memo + useCallback/useMemo**
+-> If you pass an object/ a function as a prop to a component wrapped in 'React.memo', it will still re-render on every parent cycle because objects and functions get new memory references every render
+-> To fix this, you must wrap the passed function in 'useCallback' or the passed object in 'useMemo'
+**3. Fixing state-driven performance lags**
+**A. State Co-location (Moving state down)**
+-> Keep state as close to where it is used as possible. If only a single input field changes, don't put it's state at the top-level 'App' component: move it to a dedicated 'SearchInput' component so the whole app doesn't re-render on every keystroke
+**B. Lazy initial state**
+-> If your initial state requires an expensive calculation, pass a function instead of a raw-value to useState.
+-> This ensures the heavy computation runs only once on mount, rather than on every render
+**4. Optimizing large lists : Windowing/Virtualization**
+-> The problem : Re-rendering thousands of DOM nodes for a massive list ruins the browser scrolling performance
+-> The solution : Use list virtulization libraries (like 'react.window' or 'react.virtualized'). It ensures only the items currently visible inside the user's viewport are rendered in the DOM, dynamically swappimg them out as the user scrolls
+**5. Improving initial load (Code splitting)**
+-> The problem : SPA's bundle the entire app's JS into one massive file, causing slow initial page loads
+-> The solution : Use 'React.lazy' and 'Suspense' to split your code into smaller chunks. The browser will only download a page's code when user actually navigates to it.
