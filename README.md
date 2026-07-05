@@ -208,3 +208,37 @@ Creating this repo to learn react the right way
 **5. Improving initial load (Code splitting)**
 -> The problem : SPA's bundle the entire app's JS into one massive file, causing slow initial page loads
 -> The solution : Use 'React.lazy' and 'Suspense' to split your code into smaller chunks. The browser will only download a page's code when user actually navigates to it.
+
+**Context API**
+-> A built-in React feature that allows you to share global data(like themes, user authentication, or language settings) across the entire component tree without passing props manually through every level
+-> Solves the problem - Prop drilling : the annoying process of passing props through 5 layers of intermediate components that don't actually need the data, just to get it to a deeply nested child
+**The 3-Step Setup Blueprint**
+**Step 1 : Create the context**
+-> Create a context object using 'createContext'. This is your data warehouse
+**Step 2 : Provide the context (At the top level)**
+-> Wrap the parent component tree with the '.Provider' component. Pass the shared data into the 'value' prop.
+**Step 3 : Consume the context (Deep in the tree)**
+-> Use the 'useContext' hook inside any nested child component to instantly grab the data.
+**Performance pitfall**
+-> The issue : Whenever the 'value' inside a Context Provider changes, every single component that uses 'useContext' for that provider will instantly re-render, skipping 'React.memo'
+-> The Rule of thumb :  Use context API for data that changes infrequently (Eg: Theme, user profile, language). Avoid it for high-frequency data updates(Eg : complex form tracking, game states, real-time streaming). For those, dedicated state managers like Redux/Zustand are preferred.
+
+**Prop drilling vs Context API**
+**Prop Drilling**
+-> The manual process of passing data from a high-level parent component down through multiple layers of intermediate child components to reach a deeply nested component
+**Context API** - Defined in prev. topic
+**Structural comparision**
+**Prop Drilling (The 'Pass-Along Approach)**
+-> Data must travel sequentially through every layer, even if intermediate components don't use it.
+-> Grandparent => Parent(ignores) => Child(ignores) => Deep child(uses)
+**Context API (The 'Broadcast' Approach)**
+-> Data is broadcasted globally. Components plug directly into the feed.
+-> Grandparent (Provider) => Deep child (useContext)
+**Trade-offs : Prop Drilling | Context API**
+-> Setup overhead : None. Uses standard function parameters | Moderate. Creation of Context, provider and a hook.
+-> Code cleanliness : Messy. Components get cluttered with props they don't use | Clean. removes boilerplate props from intermediate components
+-> Component reusability : High. Components remain pure functions completely dependent on explicit inputs | Lower. Tightly couples the consuming child component to its specific Provider.
+-> Performance tracking : Easy to track exactly where data is moving through the files | Harder. Re-renders every consuming component whenever context value changes
+**When to use which**
+-> Prop drilling : The data only needs to go 2-3 levels deep. It keeps the components decoupled, explicityly typed, and easy to test.
+-> Context API : The data is truly global and needed by dozens of components scattered across different branches of the app (Eg : Current user theme, language settings, user authentication status)
