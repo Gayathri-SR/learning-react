@@ -242,3 +242,26 @@ Creating this repo to learn react the right way
 **When to use which**
 -> Prop drilling : The data only needs to go 2-3 levels deep. It keeps the components decoupled, explicityly typed, and easy to test.
 -> Context API : The data is truly global and needed by dozens of components scattered across different branches of the app (Eg : Current user theme, language settings, user authentication status)
+
+**Scalable Architecture**
+-> A structured codebase design that allows an app to grow cleanly in features, team size, and complexity without degenerating into unmaintainable "sphagetti code"
+-> The goal : High Cohesion (related code stays together), Low coupling (components don't depend heavily on each other's internals).
+**Industry standard directory structure : Feature-Based**
+-> Instead of organizing files by technical type(eg. all components in one folder, all hooks in another), scale the app by 'domain feature'
+-> The 'index.js' (public API) pattern : Inside each feature folder, use an 'index.js' file to explicitly export only what the rest of the app is allowed to use. This prevents other parts of the app from importing internal, private files of that feature.
+**The 3 Architectural Global Rules**
+**Rule 1 : Presentational vs Container Components**
+-> Separate your UI look from your logic to make testing and refactoring instant:
+    => Presentational (Dumb) : Accepts props and renders JSX. No network calls/complex calculations
+    => Container (Smart) : Manages state, handles business logic, and maps data to presentation components.
+**Rule 2 : Move business logic to custom hooks**
+-> Never leave heavy data sorting, state manipulation, or API calling logic directly inside a UI layout component. Extract it into a custom hook.
+**Rule 3 : Enforce strict dependency flow**
+-> Shared components(/components) must never import anything from feature folders(/features). They must remain generic
+-> Feature components can import from shared components or their own local sub-folders.
+**Scalable Architecture tooling**
+-> As you code at scale, rely on automatic tooling rather than human memory to maintain quality :
+    => Linting & Formatting - ESLint & Prettier - Enforces strict, uniform code style and catches common code smells automatically
+    => Type safety - TypeScript - Prevents runtime errors by catching invalid props or object shapes at compile time
+    => Global state management - Zustand/Redux toolkit - Isolates volatile global data out of the React view layer completely
+    => Data fetching & Cache - Tanstack Query (React Query) - Eliminates boilerplate 'useEffect' data-fetching loops with automatic caching & retry states.
