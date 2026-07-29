@@ -265,3 +265,18 @@ Creating this repo to learn react the right way
     => Type safety - TypeScript - Prevents runtime errors by catching invalid props or object shapes at compile time
     => Global state management - Zustand/Redux toolkit - Isolates volatile global data out of the React view layer completely
     => Data fetching & Cache - Tanstack Query (React Query) - Eliminates boilerplate 'useEffect' data-fetching loops with automatic caching & retry states.
+
+**Reusable component**
+-> A component designed to be used in multiple places across an app with different data, styles or behaviors
+-> The Goal - Write code once, test it once, and reuse it everywhere to maintain consistency and slash code duplication
+**The Anatomy of Reusability**
+-> To make a component reusable, it must be 'parameterized' using Props. It should not hardcode any specific text, images or business logic
+**Core Principles for Engineering Reusability**
+**A. The Single Reusability Principle (SRP)**
+-> A component should do exactly one thing visually.
+-> A 'Card' component should only handle the layout container, border and padding. It shouldn't care if it's displaying a user, a product, or a weather update.
+**B. Inversion of Control (Component Composition)**
+-> Instead of adding endless layout props to a component, pass elements directly into it using the 'children' prop. This lets the parent decide what goes inside, keeping the child component generic.
+**The Common Trap : Over-Engineering**
+-> The Danger : Trying to make a component do everything by adding dozens of configuration props. This makes the file unmaintainable and hard to read.
+-> The Rule of thumb : If a component requires more than 5-6 configuration props just to change it's look, it's better to break it into two separate, simpler components.
