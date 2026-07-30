@@ -280,3 +280,29 @@ Creating this repo to learn react the right way
 **The Common Trap : Over-Engineering**
 -> The Danger : Trying to make a component do everything by adding dozens of configuration props. This makes the file unmaintainable and hard to read.
 -> The Rule of thumb : If a component requires more than 5-6 configuration props just to change it's look, it's better to break it into two separate, simpler components.
+
+**Custom hooks - deep dive**
+-> Key Rule : Custom hooks share stateful logic, not state itself. Two components using the same custom hook get completely isolated state.
+**When to create a custom hook**
+-> Create a custom hook when you notice :
+    => Duplicated Effects : The same 'useEffect' or API-fetching logic appears in multiple components.
+    => Bloated Components : A component file has 30+ lines of helper logic, state declarations, and event handlers obscuring the JSX
+    => Complex Stateful Logic : complex UI patterns like tracking forms, window resizing, or local storage syncing.
+**Architecture Blueprint**
+-> It acts as a middleman between raw data/APIs and your view layout.
+-> External System/Event => Custom Hook (State+Effect) => Clean Output (Data+Handlers) => UI Component (JSX).
+**Return Patterns : Objects vs Arrays (Tuples)**
+**Object Return**
+-> Eg : return {data, loading, error};
+-> Best for : Complex hooks returning multiple properties
+-> Pros : Property order doesn't matter; caller can pick and choose what to destructure.
+-> Cons : Requires explicit renaming if called twice ({data : user})
+**Array Return**
+-> Eg : return [value,setValue];
+-> Best for : Simple hooks tracking a single value pair
+-> Pros : Caller can easily pick any variable names on destructure.
+-> Cons : Strict positional order required.
+**Golden Rules for custom hooks**
+-> Name must start with 'use' : Enforced by React's linter. This signals React that the function must follow the 'Rules of Hooks'
+-> Never call hooks conditionally : The strict top-level execution rule applies inside custom hooks just as it does in standard components
+-> Keep them pure & focused : One hook should handle one responsibility. Don't build a single 'useAppEverything' mega-hook.
