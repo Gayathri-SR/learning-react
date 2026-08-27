@@ -306,3 +306,22 @@ Creating this repo to learn react the right way
 -> Name must start with 'use' : Enforced by React's linter. This signals React that the function must follow the 'Rules of Hooks'
 -> Never call hooks conditionally : The strict top-level execution rule applies inside custom hooks just as it does in standard components
 -> Keep them pure & focused : One hook should handle one responsibility. Don't build a single 'useAppEverything' mega-hook.
+
+**Error handling**
+-> The Risk : In standard React, if a runtime rendering error occurs inside any component, the entire app crashes & displays a completely blank screen to the user
+-> The strategy : Separate errors into 2 main categories :
+    => Asynchronous errors - API crashes, network drops etc,.
+    => Synchronous rendering errors - Broken JSX math, undefined object fields etc,.
+**Handling synchronous errors : Error Boundaries**
+-> A special wrapper component that catches JS errors anywhere in it's child component tree, logs the crash, and displays a clean fallback UI instead of crashing the app
+-> The limit : By React design, Error boundaries must be 'class components'. They use specific lifecycle methods to intercept bugs.
+**What Error Boundaries DO NOT catch**
+-> Event handlers : (Eg. A crash inside a button's 'onClick'). Use plain try/catch blocks here
+-> Asynchronous code : Code inside 'setTimeout' or 'requestAnimationFrame'
+-> Server-Side Rendering (SSR) : Crashes during server HTML compilation
+**Handling Asynchronous and Event Errors**
+-> For network requests or user-triggered events, user traditional JS error approaches mapped to component local state.
+**Architectural Strategy for Scales**
+-> Global Boundary : Wrap top-level <App/> in a catch-all Error Boundary to show a friendly error page
+-> Feature Boundaries : Wrap independent structura blocks (Eg- SideBar,ChatWindow,PaymentForm) individually. If the 'ChatWindow' breaks, the rest of the app remains fully interactive
+-> Modern alternative : In production apps, the battle-tested npm package 'react-error-boundary' is used to manage these systems using simple, modern functional component hooks.
