@@ -325,3 +325,30 @@ Creating this repo to learn react the right way
 -> Global Boundary : Wrap top-level <App/> in a catch-all Error Boundary to show a friendly error page
 -> Feature Boundaries : Wrap independent structura blocks (Eg- SideBar,ChatWindow,PaymentForm) individually. If the 'ChatWindow' breaks, the rest of the app remains fully interactive
 -> Modern alternative : In production apps, the battle-tested npm package 'react-error-boundary' is used to manage these systems using simple, modern functional component hooks.
+
+**Loading States**
+-> A temporary visual placeholder shown to the user while asynchronous operations (API fetches, code chun downloads, or bg computations) are pending
+-> This prevents UI freezes, avoids blsnk screens, and stops users from accidentally submitting duplicate actions while waiting
+**Common Implementation Patterns**
+**A. Boolean Flag (useState)**
+-> The standard manual approch for local component fetches.
+**B. Declarative loading via <Suspense>**
+-> Used when loading lazy-loaded components(React.lazy) or modern data-fetching libraries (Eg. Tanstack Query, Relay)
+-> React handles pausing rendering and displays a 'fallback' component automatically.
+**UI Patterns for Loading States**
+**1. Spinners/Circular Loaders**
+-> Best for : Small inline actions (button clicks, saving forms)
+-> UX trade-off : High cognitive load if used for full-page layout loads
+**2. Skeleton Screens**
+-> Best for : Initial feed/page data loads (cards, tables, profiles)
+-> Best UX : Preserves spatial layout and reduces perceived wait time
+**3. Optimistic Updates**
+-> Best for : High-frequency user actions (likes, toggles, upvotes)
+-> UX trade-off : Instantly updates the UI before the server responds; rolls back on failure
+**4. Progress bars**
+-> Best for : Deterministic long operations (file uploads, multi-step exports)
+-> Best UX : Gives exact visual feedback for operations lasting over several seconds
+**Best Practices**
+-> Prevent Layout Shift (CLS) : Always size skeleton loaders/fallback containers to match the exact height and width of the incoming content
+-> Disable action buttons : When submitting forms, disable the trigger button and show an inline spinner to prevent duplicate POST requests
+-> Avoid Flash of Loading State : For near-instant network responses (under 150ms), showing loading state causes a visual flicker. Delay showing spinners slightly if requests resolve immediately.
